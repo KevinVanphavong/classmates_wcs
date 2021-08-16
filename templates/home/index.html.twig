@@ -1,55 +1,50 @@
 {% extends 'base.html.twig' %}
 
 {% block stylesheets %}
-<style>
-    body {
-       margin: 0px;
-       padding; 0px;
-       box-sizing: border-box; 
-    }
+    {{ parent() }}
+    <style>
+        h1 {
+            color: red;
+            text-align: center;
+        }
 
-    h1 {
-        color: red;
-        text-align: center;
-    }
+        section {
+            display: flex;
+            justify-content: space-evenly;
+        }
 
-    section {
-        display: flex;
-        justify-content: space-evenly;
-    }
+        .wilder-card {
+            height: 500px;
+            width: 300px;
+            background-color: black;
+            border: 5px solid red;
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+        }
 
-    .wilder-card {
-        height: 500px;
-        width: 300px;
-        background-color: black;
-        border: 5px solid red;
-        border-radius: 20px;
-        display: flex;
-        flex-direction: column;
-    }
+        .wilder-card-top,
+        .wilder-card-bottom {
+            height: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
 
-    .wilder-card-top,
-    .wilder-card-bottom {
-        height: 50%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
+        .wilder-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background-color: white;
+        }
 
-    .wilder-img {
-        width: 150px;
-        height: 150px;
-        border-radius: 50%;
-        background-color: white;
-    }
-
-    .wilder-infos {
-        width: 80%;
-        height: 80%;
-        background-color: white;
-        border-radius: 20px;
-    }
-</style>
+        .wilder-infos {
+            width: 80%;
+            height: 80%;
+            background-color: white;
+            border-radius: 20px;
+        }
+    </style>
 {% endblock %}
 
 {% block body %}

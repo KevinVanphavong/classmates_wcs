@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block body %}
+	<h1 class="text-center">
+		Gestion des wilders
+	</h1>
+
+    <section class="container">
+        <table class="table table-dark table-striped">
+            <thead>
+                <tr>
+                    <th>Prenom</th>
+                    <th>Nom</th>
+                    <th>Date de naissance</th>
+                    <th>Informations</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for wilder in wilders %}
+                    <tr>
+                        <td>{{ wilder.firstname }}</td>
+                        <td>{{ wilder.lastname }}</td>
+                        <td>{{ wilder.birthDate | date("m / d / Y") }}</td>
+                        <td>{{ wilder.informations }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </section>
+{% endblock %}
