@@ -19,6 +19,14 @@ class WilderRepository extends ServiceEntityRepository
         parent::__construct($registry, Wilder::class);
     }
 
+    public function getThreeRandomWilders($arrayWildersKeys)
+    {
+        return $this->createQueryBuilder('w')
+            ->Where('w.id IN (:val)')
+            ->setParameter('val', $arrayWildersKeys)
+            ->getQuery()
+            ->getResult();
+    }
     // /**
     //  * @return Wilder[] Returns an array of Wilder objects
     //  */

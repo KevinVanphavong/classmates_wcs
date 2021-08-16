@@ -48,43 +48,89 @@
 {% endblock %}
 
 {% block body %}
+    <div class="container">
+        <h1>
+            Trombinoscope
+            <br>
+            Wild Code School
+            <br> 
+            Promo Ikigaï 2020/2021
+        </h1>
 
-<h1>
-    Trombinoscope
-	<br>
-	Wild Code School
-	<br> 
-    Promo Ikigaï 2020/2021
-</h1>
+        <div class="text-center m-3">
+            <a id="btn-fetch-random-wilders" class='btn btn-dark' href="{{ path('newRandomWilfers') }}">
+                Afficher nouveaux Wilders
+            </a>
+        </div>
 
-<section>
-    <div class="wilder-card">
-        <div class="wilder-card-top">
-            <div class="wilder-img"></div>
-        </div>
-        <div class="wilder-card-bottom">
-            <div class="wilder-infos"></div>
-        </div>
+        <section>
+            <div class="wilder-card">
+                <div class="wilder-card-top">
+                    <div class="wilder-img"></div>
+                </div>
+                <div class="wilder-card-bottom">
+                    <div class="wilder-infos p-2">
+                    </div>
+                </div>
+            </div>
+
+            <div class="wilder-card">
+                <div class="wilder-card-top">
+                    <div class="wilder-img"></div>
+                </div>
+                <div class="wilder-card-bottom">
+                    <div class="wilder-infos p-2">
+                    </div>
+                </div>
+            </div>
+
+            <div class="wilder-card">
+                <div class="wilder-card-top">
+                    <div class="wilder-img"></div>
+                </div>
+                <div class="wilder-card-bottom">
+                    <div class="wilder-infos p-2">
+                    </div>
+                </div>
+            </div>
+        </section>
     </div>
+{% endblock %}
 
-    <div class="wilder-card">
-        <div class="wilder-card-top">
-            <div class="wilder-img"></div>
-        </div>
-        <div class="wilder-card-bottom">
-            <div class="wilder-infos"></div>
-        </div>
-    </div>
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+    let btnFetchRandomWilders = document.getElementById('btn-fetch-random-wilders')
 
+    btnFetchRandomWilders.addEventListener('click', function(event) {
+        event.preventDefault();
+        fetch(this.href, {
+            method: "POST",
+            headers: {
+                'X-Requested-With': "XMLHttpRequest", 
+                'Content-Type': "application/json"
+            },
+        })
+        .then(response => response.json())
+        .then(function(response) {
 
-    <div class="wilder-card">
-        <div class="wilder-card-top">
-            <div class="wilder-img"></div>
-        </div>
-        <div class="wilder-card-bottom">
-            <div class="wilder-infos"></div>
-        </div>
-    </div>
-</section>
+            let blocksInfoWilder = document.querySelectorAll('.wilder-card .wilder-card-bottom .wilder-infos')
+            for (let i = 0; i < response.length; i++) {
+                blocksInfoWilder[i].innerHTML = "";
 
+                let wilderName = document.createElement('p')
+                wilderName.innerText = response[i].firstname + ' ' + response[i].lastname
+                blocksInfoWilder[i].appendChild(wilderName)
+
+                let wilderAge = document.createElement('p')
+                wilderAge.innerText = response[i].birthDate
+                blocksInfoWilder[i].appendChild(wilderAge)
+
+                let wilderInfo = document.createElement('p')
+                wilderInfo.innerText = response[i].informations
+                blocksInfoWilder[i].appendChild(wilderInfo)
+            }
+        })
+    })
+    </script>
 {% endblock %}
