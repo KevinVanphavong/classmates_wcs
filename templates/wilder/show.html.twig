@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Wilder{% endblock %}
+
+{% block body %}
+    <h1>Wilder</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ wilder.id }}</td>
+            </tr>
+            <tr>
+                <th>Firstname</th>
+                <td>{{ wilder.firstname }}</td>
+            </tr>
+            <tr>
+                <th>Lastname</th>
+                <td>{{ wilder.lastname }}</td>
+            </tr>
+            <tr>
+                <th>BirthDate</th>
+                <td>{{ wilder.birthDate ? wilder.birthDate|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Informations</th>
+                <td>{{ wilder.informations }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('wilder_index') }}">back to list</a>
+
+    <a href="{{ path('wilder_edit', {'id': wilder.id}) }}">edit</a>
+
+    {{ include('wilder/_delete_form.html.twig') }}
+{% endblock %}
