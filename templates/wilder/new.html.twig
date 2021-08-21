@@ -1,11 +1,23 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets2 %}
+    {{ encore_entry_link_tags('adminWilder') }}
+{% endblock %}
+
 {% block title %}New Wilder{% endblock %}
 
 {% block body %}
-    <h1>Create new Wilder</h1>
+<section class="container">
+    <div class="title">
+        <h1 class="my-3">
+            Create new Wilder
+        </h1>
+    </div>
 
-    {{ include('wilder/_form.html.twig') }}
+    <div class="form-new-wilder mb-3">
+        {{ include('wilder/_form.html.twig') }}
+    </div>
 
-    <a href="{{ path('wilder_index') }}">back to list</a>
+    <a href="{{ path('wilder_index') }}" class="btn btn-outline-danger">Retour à l'index des Wilders</a>
+</section>
 {% endblock %}

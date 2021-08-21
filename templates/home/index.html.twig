@@ -1,28 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block stylesheets %}
+{% block stylesheets1 %}
+    {{ parent() }}
+{% endblock %}
+
+{% block stylesheets2 %}
     <style>
-        body {
-            background-color: black;
-            margin: 0px;
-            padding: 0px;
-            box-sizing: border-box;
-            font-family: 'Baskerville';
-            height: 100vh;
-            width: 100vw;
-            display: flex;
-            flex-direction: column;
-            font-size: 24px;
-        }
-
-        .title {
-            width: 100%;
-            height: 15%;
-            display: flex;
-            justify-content: center;
-            align-items: flex-end;
-        }
-
         .block-button {
             height: 15%;
             text-align: center;
@@ -39,6 +22,7 @@
             display: flex;
             justify-content: space-evenly;
             align-items: center;
+            margin: 20px 0px;
         }
 
         .wilder-card {
@@ -96,7 +80,7 @@
             .wilder-card {
                 width: auto;
                 height: auto;
-                padding: 10px 20px;
+                padding: 10px;
             }
             .wilder-img {
                 width: 125px;
@@ -108,6 +92,29 @@
             .wilder-infos {
                 width: 100%;
             }
+        }
+
+        @media screen and (max-width: 700px) {
+            .wilder-card {
+                min-width: 80%;
+                flex-direction: row;
+                align-items: center;
+            }
+            .section-cards {
+                height: auto;
+                flex-direction: column;
+                justify-content: space-between;
+                align-items: center;
+                margin: 0px;
+            }
+            .wilder-card {
+                margin: 10px 0px;
+            }
+            .wilder-card:hover {
+                transform: translateX(20px);
+                cursor: help;
+            }
+        }
     </style>
 {% endblock %}
 
