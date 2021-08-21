@@ -44,7 +44,8 @@ class HomeController extends AbstractController
                     'firstname' => $newWilder->getFirstname(),
                     'lastname' => $newWilder->getLastname(),
                     'birthDate' => $newWilder->getBirthDate()->format('Y-m-d'),
-                    'informations' => $newWilder->getInformations()
+                    'informations' => $newWilder->getInformations(),
+                    'imageName' => $newWilder->getWilderImage() ? $newWilder->getWilderImage()->getName() : "..."
                 ];
             }
         

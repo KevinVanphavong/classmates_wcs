@@ -56,6 +56,7 @@
             height: 175px;
             border-radius: 50%;
             background-color: white;
+            overflow: hidden;
         }
 
         .wilder-infos {
@@ -185,6 +186,14 @@
                     let wilderCardBottom = document.createElement("div")
                     let wilderImg = document.createElement("div")
                     let wilderInfos = document.createElement("div")
+
+                    if (response[i].imageName != "...") {
+                        let imageOfWilder = document.createElement('img')
+                        let imageRessource = "uploads/wilders/" +  response[i].imageName
+                        imageOfWilder.style.width = "100%"
+                        imageOfWilder.src = "{{ asset('imageRessource') }}".replace('imageRessource', imageRessource)
+                        wilderImg.appendChild(imageOfWilder)
+                    }
 
                     wilderCard.classList.add('wilder-card')
                     wilderCardTop.classList.add("wilder-card-top")
