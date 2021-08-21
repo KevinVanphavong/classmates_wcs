@@ -37,6 +37,11 @@ class Wilder
      */
     private $informations;
 
+    /**
+     * @ORM\OneToOne(targetEntity=WilderImage::class, mappedBy="wilder", cascade={"persist", "remove"})
+     */
+    private $wilderImage;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -86,6 +91,23 @@ class Wilder
     public function setInformations(?string $informations): self
     {
         $this->informations = $informations;
+
+        return $this;
+    }
+
+    public function getWilderImage(): ?WilderImage
+    {
+        return $this->wilderImage;
+    }
+
+    public function setWilderImage(WilderImage $wilderImage): self
+    {
+        // set the owning side of the relation if necessary
+        if ($wilderImage->getWilder() !== $this) {
+            $wilderImage->setWilder($this);
+        }
+
+        $this->wilderImage = $wilderImage;
 
         return $this;
     }
