@@ -17,7 +17,11 @@ class WilderFixtures extends Fixture
             $wilder->setFirstname($faker->firstName);
             $wilder->setLastname($faker->lastName);
             $wilder->setBirthDate($faker->dateTime);
-            $wilder->setInformations($faker->realText(100));
+            if ($i < 6) {
+                $wilder->setInformations('PHP / Symfony');
+            } else {
+                $wilder->setInformations('JS / React + Node');
+            }
             $manager->persist($wilder);
         }
         $manager->flush();

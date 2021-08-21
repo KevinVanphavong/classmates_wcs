@@ -1,26 +1,62 @@
 {% extends 'base.html.twig' %}
 
 {% block stylesheets %}
-    {{ parent() }}
     <style>
-        h1 {
-            color: red;
+        body {
+            background-color: black;
+            margin: 0px;
+            padding: 0px;
+            box-sizing: border-box;
+            font-family: 'Baskerville';
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+            flex-direction: column;
+            font-size: 24px;
+        }
+
+        .title {
+            width: 100%;
+            height: 15%;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+        }
+
+        .block-button {
+            height: 15%;
             text-align: center;
         }
 
-        section {
+        h1 {
+            color: red;
+            text-align: center;
+            text-shadow: 2px 1px 6px rgb(195,0,0), 3px 2px 6px white;
+        }
+
+        .section-cards {
+            height: 70%;
             display: flex;
             justify-content: space-evenly;
+            align-items: center;
         }
 
         .wilder-card {
             height: 500px;
-            width: 300px;
-            background-color: black;
-            border: 5px solid red;
+            width: 350px;
+            background-color: rgb(24,29,28);
+            border: 5px inset rgb(195,0,0);
             border-radius: 20px;
             display: flex;
             flex-direction: column;
+            box-shadow: 2px 2px 16px rgba(166,0,0,0.75), -2px -2px 16px rgb(100,0,0);
+            transition-duration: 0.5s;
+            transform: rotateY(0deg);
+        }
+
+        .wilder-card:hover {
+            transform: translateY(-20px);
+            cursor: help;
         }
 
         .wilder-card-top,
@@ -32,68 +68,76 @@
         }
 
         .wilder-img {
-            width: 150px;
-            height: 150px;
+            width: 175px;
+            height: 175px;
             border-radius: 50%;
             background-color: white;
         }
 
         .wilder-infos {
             width: 80%;
-            height: 80%;
-            background-color: white;
-            border-radius: 20px;
+            height: 90%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+            color: whitesmoke;
         }
+
+        .color-blood {
+            background: -webkit-linear-gradient(340deg, rgba(215,215,215,1) 0%, rgba(184,128,128,1) 33%, rgba(255,0,0,1) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        @media screen and (max-width: 1000px) {
+            body {
+                font-size: 20px;
+            }
+            .wilder-card {
+                width: auto;
+                height: auto;
+                padding: 10px 20px;
+            }
+            .wilder-img {
+                width: 125px;
+                height: 125px;
+            }
+            .wilder-card-top {
+                padding: 10px;
+            }
+            .wilder-infos {
+                width: 100%;
+            }
     </style>
 {% endblock %}
 
 {% block body %}
-    <div class="container">
-        <h1>
-            Trombinoscope
-            <br>
-            Wild Code School
-            <br> 
-            Promo Ikigaï 2020/2021
+    <div class="title">
+        <h1 class="my-3">
+            Wild Code School - Promo Ikigaï 2020/2021
         </h1>
+    </div>
 
-        <div class="text-center m-3">
-            <a id="btn-fetch-random-wilders" class='btn btn-dark' href="{{ path('newRandomWilfers') }}">
-                Afficher nouveaux Wilders
-            </a>
+    <section class="section-cards">
+        <div class="wilder-card">
+            <div class="wilder-card-top">
+                <div class="wilder-img"></div>
+            </div>
+            <div class="wilder-card-bottom">
+                <div class="wilder-infos p-2">
+                    <p class="color-blood">Nom :</p>
+                    <p class="color-blood">Prénom :</p>
+                    <p class="color-blood">Age :</p>
+                    <p class="color-blood">Spécialisation :</p>
+                </div>
+            </div>
         </div>
+    </section>
 
-        <section>
-            <div class="wilder-card">
-                <div class="wilder-card-top">
-                    <div class="wilder-img"></div>
-                </div>
-                <div class="wilder-card-bottom">
-                    <div class="wilder-infos p-2">
-                    </div>
-                </div>
-            </div>
-
-            <div class="wilder-card">
-                <div class="wilder-card-top">
-                    <div class="wilder-img"></div>
-                </div>
-                <div class="wilder-card-bottom">
-                    <div class="wilder-infos p-2">
-                    </div>
-                </div>
-            </div>
-
-            <div class="wilder-card">
-                <div class="wilder-card-top">
-                    <div class="wilder-img"></div>
-                </div>
-                <div class="wilder-card-bottom">
-                    <div class="wilder-infos p-2">
-                    </div>
-                </div>
-            </div>
-        </section>
+    <div class="block-button">
+        <a id="btn-fetch-random-wilders" class='btn btn-lg btn-dark mt-3' href="{{ path('newRandomWilfers') }}">
+            Afficher nouveaux Wilders
+        </a>
     </div>
 {% endblock %}
 
@@ -104,6 +148,10 @@
 
     btnFetchRandomWilders.addEventListener('click', function(event) {
         event.preventDefault();
+        let allWilderCards = document.querySelectorAll('.wilder-card')
+        allWilderCards.forEach(card => {
+            card.style.transform = "rotateY(90deg)"
+        });
         fetch(this.href, {
             method: "POST",
             headers: {
@@ -115,21 +163,50 @@
         .then(function(response) {
 
             let blocksInfoWilder = document.querySelectorAll('.wilder-card .wilder-card-bottom .wilder-infos')
-            for (let i = 0; i < response.length; i++) {
-                blocksInfoWilder[i].innerHTML = "";
+            let sectionCards = document.querySelector('.section-cards')
 
-                let wilderName = document.createElement('p')
-                wilderName.innerText = response[i].firstname + ' ' + response[i].lastname
-                blocksInfoWilder[i].appendChild(wilderName)
+            setTimeout(() => {
+                sectionCards.innerHTML = "";
 
-                let wilderAge = document.createElement('p')
-                wilderAge.innerText = response[i].birthDate
-                blocksInfoWilder[i].appendChild(wilderAge)
+                allWilderCards.forEach(card => {
+                    card.style.transform = "rotateY(90deg)"
+                });
 
-                let wilderInfo = document.createElement('p')
-                wilderInfo.innerText = response[i].informations
-                blocksInfoWilder[i].appendChild(wilderInfo)
-            }
+                for (let i = 0; i < response.length; i++) {
+                    let wilderCard = document.createElement("div")
+                    let wilderCardTop = document.createElement("div")
+                    let wilderCardBottom = document.createElement("div")
+                    let wilderImg = document.createElement("div")
+                    let wilderInfos = document.createElement("div")
+
+                    wilderCard.classList.add('wilder-card')
+                    wilderCardTop.classList.add("wilder-card-top")
+                    wilderCardBottom.classList.add("wilder-card-bottom")
+                    wilderImg.classList.add("wilder-img")
+                    wilderInfos.classList.add("wilder-infos")
+
+                    let pWilderFirstname = document.createElement("p")
+                    let pWilderLastname = document.createElement("p")
+                    let pWilderAge = document.createElement("p")
+                    let pWilderSpe = document.createElement("p")
+
+                    pWilderFirstname.classList.add('color-blood')
+                    pWilderLastname.classList.add('color-blood')
+                    pWilderAge.classList.add('color-blood')
+                    pWilderSpe.classList.add('color-blood')
+
+                    pWilderFirstname.innerText = "Prénom : " + response[i].firstname
+                    pWilderLastname.innerText = "Nom : " + response[i].lastname
+                    pWilderAge.innerText = "Age : " + response[i].birthDate
+                    pWilderSpe.innerHTML = "Spécialisation : <br>" + response[i].informations
+
+                    wilderCardTop.appendChild(wilderImg)
+                    wilderCardBottom.appendChild(wilderInfos)
+                    wilderCard.append(wilderCardTop, wilderCardBottom)
+                    wilderInfos.append(pWilderFirstname, pWilderLastname, pWilderAge, pWilderSpe)
+                    sectionCards.appendChild(wilderCard)
+                }
+            }, 500);
         })
     })
     </script>

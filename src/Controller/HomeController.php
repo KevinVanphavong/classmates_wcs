@@ -27,7 +27,12 @@ class HomeController extends AbstractController
     public function getNewRandomWilders(WilderRepository $wilderRepository, Request $request): ?Response
     {
         $wilders = $wilderRepository->findAll();
-        $rand_keys = array_rand($wilders, 3);
+        $arrayWildersId = [];
+        foreach ($wilders as $wilder) {
+            $arrayWildersId[$wilder->getId()] = $wilder->getId();
+        }
+
+        $rand_keys = array_rand($arrayWildersId, 3);
 
         if ($request->attributes->get('_route') == "newRandomWilfers") {
             $arrayNewWilders = [];
@@ -35,13 +40,14 @@ class HomeController extends AbstractController
 
             foreach ($newWilders as $newWilder) {
                 $arrayNewWilders[] = [
+                    'id' => $newWilder->getId(),
                     'firstname' => $newWilder->getFirstname(),
                     'lastname' => $newWilder->getLastname(),
                     'birthDate' => $newWilder->getBirthDate()->format('Y-m-d'),
                     'informations' => $newWilder->getInformations()
                 ];
             }
-            
+        
             return new JsonResponse($arrayNewWilders);
         } else {
             return $wilderRepository->getThreeRandomWilders($rand_keys);
