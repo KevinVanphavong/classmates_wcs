@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Wilder;
+use App\Entity\WilderImage;
 use App\Form\WilderType;
 use App\Repository\WilderRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -38,6 +39,21 @@ class WilderController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $image = $form->get('wilderImage')->getData();
+
+            if ($image) {
+                // Générer un nouveau nom de fichier pour l'image
+                $imageName = md5(uniqId()) . '.' . $image->guessExtension();
+
+                // envoyer l'image sur le disque dans uploads
+                $image->move($this->getParameter('wilder_images'), $imageName);
+
+                // envoyer/stocker le nom de l'image en bdd pour appeler et afficher l'image plus tard
+                $newImage = new WilderImage();
+                $newImage->setName($imageName);
+                $wilder->setWilderImage($newImage);
+            }
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($wilder);
             $entityManager->flush();
@@ -70,6 +86,21 @@ class WilderController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $image = $form->get('wilderImage')->getData();
+
+            if ($image) {
+                // Générer un nouveau nom de fichier pour l'image
+                $imageName = md5(uniqId()) . '.' . $image->guessExtension();
+
+                // envoyer l'image sur le disque dans uploads
+                $image->move($this->getParameter('wilder_images'), $imageName);
+
+                // envoyer/stocker le nom de l'image en bdd pour appeler et afficher l'image plus tard
+                $newImage = new WilderImage();
+                $newImage->setName($imageName);
+                $wilder->setWilderImage($newImage);
+            }
+
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('wilder_index', [], Response::HTTP_SEE_OTHER);
